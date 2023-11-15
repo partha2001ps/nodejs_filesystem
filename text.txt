@@ -1,9 +1,0 @@
-github url:https://github.com/partha2001ps/nodejs_filesystem
-
-render url:https://nodejs-filesystem-9790.onrender.com/
-
-last Hash id:984dcc7d13be6d9494cea3062bf6a881b999ff4a
-
-end point url:
-     
-        '/' view data and time route path
