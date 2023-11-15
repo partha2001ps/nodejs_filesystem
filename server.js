@@ -43,7 +43,17 @@ const bookings = [
 
 // Welcome message for the root path
 app.get('/', (req, res) => {
-  res.send('Welcome to the room booking system!');
+  res.send(`<h1>Welcome to the room booking system!</h1>
+    <h2>API ENDPOINTS :</h2>
+   
+    <div>'/'  - Welcome message for the root path</div>
+    <div> '/bookRoom'  - for booking a bookRoom</div>
+    <div>
+    '/listRooms'  - List all Rooms with Booked Data</div>
+    <div>   '/listCustomers'  -  List all customers with booked Data</div>
+    <div>
+    '/customerBookingHistory/:customerName'  - List how many times a customer has booked the room</div>
+    `);
 });
 
 // Create a Room
