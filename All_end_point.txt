@@ -1,0 +1,26 @@
+/student
+      Student Information
+
+/mentors 
+       mentors Information
+
+/create/student
+       Endpoint to create a new student
+
+/create/mentor'
+      Endpoint to create a new mentor
+
+'/assignmentor/:mentorId/:studentId' 
+      Endpoint to assign a student to a mentor
+
+'/nomentor'
+      Endpoint to get students without a mentor
+
+/assign-mentor/:studentId/:mentorId' 
+      Endpoint to assign or change mentor for a particular student
+
+ /paticularmentor/:mentorId' 
+      Endpoint to show all students for a particular mentor
+
+ /previous-mentor/:studentId'
+      Endpoint to show the previously assigned mentor for a particular student
