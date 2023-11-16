@@ -1,39 +1,46 @@
-// to install express js and require path ,fs and express
-  
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs').promises;
 
 const app = express();
+const PORT = 3001;
 
-// to local port with Port number
-const PORT = 3000;
+app.use(express.json());
 
-// to current data and time and replace : to _ because file created
+app.get('/', async (req, res) => {
+  try {
+    const files = await fs.readdir('./', { withFileTypes: true });
 
-const currentTimeStamp = new Date().toISOString().replace(/:/g, '_');
-const fileName = `${currentTimeStamp}.txt`;
+    const fileContents = [];
+    for (const file of files) {
+      if (file.isFile() && file.name.endsWith('.txt') && file.name !== 'text.txt') {
+        const data = await fs.readFile(`./${file.name}`, 'utf-8');
+        fileContents.push({ filename: file.name, content: data });
+      }
+    }
 
-// to write file create current data and time
-
-fs.writeFile(`./${fileName}`, currentTimeStamp, { flag: 'w+' }, (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('File added successfully');
+    console.log('All text files are read successfully');
+    res.json(fileContents);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
   }
 });
 
-// to read the data fileName 
-// to end point is '/' to create is the read data
-app.get('/', (req, res) => {
-  fs.readFile(`./${fileName}`,'utf-8', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-    res.send(data);
-  });
+app.post('/', async (req, res) => {
+  try {
+    const currentTime = new Date().toISOString().replace(/:/g, '_');
+    const filename = `./${currentTime}.txt`;
+
+    await fs.writeFile(filename, currentTime, { flag: 'w+' });
+    console.log('File added successfully');
+
+    res.status(201).json({ filename, content: currentTime });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 });
-//  to local host server running in console 
+
 app.listen(PORT, () => {
-  console.log(`Server is running http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
